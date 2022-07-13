@@ -131,11 +131,21 @@ func main() {
 	router := gin.Default()
 	router.Static("/audios", "./audios")
 
-	router.GET("/chapters", getChapters)
-	router.GET("/chapters/:id", getChapter)
-	router.GET("/chapters/:id/invocations", getChapterInvocations)
-	router.GET("/chapters/:id/invocations/:invocationId", getSingleInvocation)
-	router.GET("/invocations", getChaptersWithInvocations)
+	v1 := router.Group("/api/v1")
+	{
+		chapters := v1.Group("/chapters")
+		{
+			chapters.GET("", getChapters)
+			chapters.GET(":id", getChapter)
+			chapters.GET(":id/invocations", getChapterInvocations)
+			chapters.GET(":id/invocations/:invocationId", getSingleInvocation)
+		}
 
-	router.Run("localhost:8888")
+		invocations := v1.Group("/invocations")
+		{
+			invocations.GET("", getChaptersWithInvocations)
+		}
+	}
+
+	router.Run(":8888")
 }
