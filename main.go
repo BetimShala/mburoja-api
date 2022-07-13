@@ -55,11 +55,11 @@ func getChapter(c *gin.Context) {
 	}
 
 	if chapter.Id == 0 {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Chapter not found."})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Chapter not found."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, chapter)
+	c.JSON(http.StatusOK, chapter)
 }
 
 func getChapters(c *gin.Context) {
@@ -70,12 +70,12 @@ func getChapters(c *gin.Context) {
 		list = append(list, Chapter{Id: chapter.Id, ChapterName: chapter.ChapterName})
 	}
 
-	c.IndentedJSON(http.StatusOK, list)
+	c.JSON(http.StatusOK, list)
 }
 
 func getChaptersWithInvocations(c *gin.Context) {
 	data := readData()
-	c.IndentedJSON(http.StatusOK, data)
+	c.JSON(http.StatusOK, data)
 }
 
 func getChapterInvocations(c *gin.Context) {
@@ -92,7 +92,7 @@ func getChapterInvocations(c *gin.Context) {
 			invocations = item.Invocations
 		}
 	}
-	c.IndentedJSON(http.StatusOK, invocations)
+	c.JSON(http.StatusOK, invocations)
 }
 
 func getSingleInvocation(c *gin.Context) {
@@ -108,7 +108,7 @@ func getSingleInvocation(c *gin.Context) {
 	}
 
 	if len(invocations) == 0 {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Chapter not found."})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Chapter not found."})
 		return
 	}
 
@@ -120,11 +120,11 @@ func getSingleInvocation(c *gin.Context) {
 	}
 
 	if (Invocation{}) == invocation {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Invocation not found."})
+		c.JSON(http.StatusNotFound, gin.H{"message": "Invocation not found."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, invocation)
+	c.JSON(http.StatusOK, invocation)
 }
 
 func main() {
